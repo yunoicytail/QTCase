@@ -8,6 +8,9 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    ui->spinPeriod->setRange(0,255);
+    //ui->spinPeriod->set
+    //ui->spinDepth->clear();
 }
 
 Widget::~Widget()
@@ -35,17 +38,12 @@ float Widget::calWaveNumber(double a, double b)
 
 void Widget::on_btnCal_clicked()
 {
-    QString str=ui->editPeriod->text();
-    double    wavePeriod=str.toDouble();
-    str=ui->editDepth->text();
-    double    waterDepth=str.toDouble();
-    double    waveNumber=calWaveNumber(wavePeriod,waterDepth);
-    double    waveLength=2*Pi/waveNumber;
-    double    waveVelocity=waveLength/wavePeriod;
-    str=str.sprintf("%.8f",waveNumber);
-    ui->editWaveNumber->setText(str);
-    str=str.sprintf("%.8f",waveLength);
-    ui->editWaveLength->setText(str);
-    str=str.sprintf("%.8f",waveVelocity);
-    ui->editWaveVelocity->setText(str);
+    double      wavePeriod=ui->spinPeriod->value();
+    double      waterDepth=ui->spinDepth->value();
+    double      waveNumber=calWaveNumber(wavePeriod,waterDepth);
+    double      waveLength=2*Pi/waveNumber;
+    double      waveVelocity=waveLength/wavePeriod;
+    ui->spinWaveNumber->setValue(waveNumber);
+    ui->spinWaveLength->setValue(waveLength);
+    ui->spinWaveVelocity->setValue(waveVelocity);
 }
